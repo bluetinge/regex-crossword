@@ -1,32 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>RegEx Crossword</title>
-    <!-- meta http-equiv="refresh" content="1" -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-    <script src="crossword.js"></script>
-    <link rel="stylesheet" type="text/css" href="crossword.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Regex-crossword by joosep</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-    It's a crossword puzzle where you need to fill in the hexes with character sequences, so that they match the regular expressions listed around the edges.<br/>
-    The individual clues will turn <span class="match">green</span> when satisfied, <span class="nomatch">red</span> when not.<br/>
-    <input type="button" value="Reset" id="reset"></input>
-    <table id="board_table">
-      <tr><td id="board" align="center">
-      </td>
-    </table>
+    <div class="wrapper">
+      <header>
+        <h1>Regex-crossword</h1>
+        <p>Implementation of a RegExp crossword.</p>
 
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+        <p class="view"><a href="https://github.com/joosep/regex-crossword">View the Project on GitHub <small>joosep/regex-crossword</small></a></p>
 
-    Javascript implementation by <a href="https://github.com/Jimbly">Jimb Esser</a>.  Source code available on <a href="https://github.com/Jimbly/regex-crossword">GitHub</a>, fork and add your own puzzles!<br/>
-    Original puzzle from: <a href="http://www.i-programmer.info/news/144-graphics-and-games/5450-can-you-do-the-regular-expression-crossword.html">http://www.i-programmer.info/news/144-graphics-and-games/5450-can-you-do-the-regular-expression-crossword.html</a><br/>
-    Solution available <a href="http://z.manicsages.org/puzzle/uploads/puzzle_files/50d697158c9cf.svg">here</a>.
-    <br/>
-    Best viewed in <a href="http://chrome.google.com">Google Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.  If you are using one of these browsers, your work should be saved if you refresh the page or come back later.<br/>
-    <div id="debug"></div>
+
+        <ul>
+          <li><a href="https://github.com/joosep/regex-crossword/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/joosep/regex-crossword/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/joosep/regex-crossword">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="regex-crossword" class="anchor" href="#regex-crossword"><span class="octicon octicon-link"></span></a>regex-crossword</h1>
+
+<p>Implementation of a RegExp crossword.</p>
+
+<p>View the current version at <a href="http://jimbly.github.com/regex-crossword/">http://jimbly.github.com/regex-crossword/</a></p>
+
+<p>Original puzzle from <a href="http://www.i-programmer.info/news/144-graphics-and-games/5450-can-you-do-the-regular-expression-crossword.html">http://www.i-programmer.info/news/144-graphics-and-games/5450-can-you-do-the-regular-expression-crossword.html</a></p>
+
+<h1>
+<a name="todo-list" class="anchor" href="#todo-list"><span class="octicon octicon-link"></span></a>TODO List</h1>
+
+<ul>
+<li>Auto-check against known solution</li>
+<li>Allow choosing between multiple crosswords puzzles</li>
+<li>Allow users to save their own puzzles and load other people's</li>
+<li>Track time spent solving puzzle</li>
+<li>Rotate buttons</li>
+<li>Undo/redo</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/joosep">joosep</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
   </body>
 </html>
