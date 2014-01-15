@@ -16,7 +16,6 @@ function transformToAssocArray( prmstr ) {
 var params = getSearchParameters();
 var url = params["url"];
 var solution = params["solution"];
-//var url = "https://raw.github.com/joosep/regex-crossword/master/mit_board_data.json"
 
 var user_data;
 var board_data;
@@ -27,6 +26,7 @@ if (url != undefined) {
         async: false,
         success: function(data) {
             board_data = data;
+            init();
         }
     });
 }
@@ -36,67 +36,12 @@ if (solution != undefined) {
         dataType: 'json',
         async: false,
         success: function(data) {
-            console.log(data);
             user_data = data;
+            onInputChange();
         }
     });
 }
 
-if (!board_data || !board_data.rows) {
-console.log(board_data);
-board_data = {
-  size: 13,
-  name: 'original',
-  x: [
-    '[^X]*(DN|TE|NI)'
-    ,'[RONMHC]*I[RONMHC]*'
-    ,'.*(..)\\1P+'
-    ,'(E|RC|NM)*'
-    ,'([^MC]|MM|CC)*'
-    ,'R?(CR)*MC[MA]*'
-    ,'.*'
-    ,'.*CDD.*RRP.*'
-    ,'(XHH|[^XH])*'
-    ,'([^CME]|ME)*'
-    ,'.*RXO.*'
-    ,'.*LR.*RL.*'
-    ,'.*EU.*ES.*'
-  ],
-  y: [
-    '.*H.*H.*'
-    ,'(DI|NS|TH|OM)*'
-    ,'F.*[AO].*[AO].*'
-    ,'(O|RHH|MM)*'
-    ,'.*'
-    ,'C*MC(CCC|MM)*'
-    ,'[^C]*[^R]*III.*'
-    ,'(...?)\\1*'
-    ,'([^X]|XCC)*'
-    ,'(RR|HHH)*.?'
-    ,'N.*X.X.X.*E'
-    ,'R*D*M*'
-    ,'.(C|HH)*'
-  ],
-  z: [
-    '.*H.*V.*G.*'
-    ,'[RC]*'
-    ,'M*XEX.*'
-    ,'.*MCC.*DD.*'
-    ,'.*X.*RCHX.*'
-    ,'.*(.)(.)(.)(.)\\4\\3\\2\\1.*'
-    ,'(NI|ES|IH).*'
-    ,'[^C]*MMM[^C]*'
-    ,'.*(.)X\\1C\\1.*'
-    ,'[ROMEA]*HO[UMIEC]*'
-    ,'(XR|[^R])*'
-    ,'[^M]*M[^M]*'
-    ,'(S|MM|HHH)*'
-  ],
-};
-};
-
-var mid = (board_data.size - 1) / 2;
-var size = board_data.size;
 
 function loadData() {
   if (!user_data || !user_data.rows ) {
@@ -234,6 +179,62 @@ function reset() {
 }
 
 function init() {
+  if (!board_data || !board_data.rows) {
+console.log(board_data);
+board_data = {
+  size: 13,
+  name: 'original',
+  x: [
+    '[^X]*(DN|TE|NI)'
+    ,'[RONMHC]*I[RONMHC]*'
+    ,'.*(..)\\1P+'
+    ,'(E|RC|NM)*'
+    ,'([^MC]|MM|CC)*'
+    ,'R?(CR)*MC[MA]*'
+    ,'.*'
+    ,'.*CDD.*RRP.*'
+    ,'(XHH|[^XH])*'
+    ,'([^CME]|ME)*'
+    ,'.*RXO.*'
+    ,'.*LR.*RL.*'
+    ,'.*EU.*ES.*'
+  ],
+  y: [
+    '.*H.*H.*'
+    ,'(DI|NS|TH|OM)*'
+    ,'F.*[AO].*[AO].*'
+    ,'(O|RHH|MM)*'
+    ,'.*'
+    ,'C*MC(CCC|MM)*'
+    ,'[^C]*[^R]*III.*'
+    ,'(...?)\\1*'
+    ,'([^X]|XCC)*'
+    ,'(RR|HHH)*.?'
+    ,'N.*X.X.X.*E'
+    ,'R*D*M*'
+    ,'.(C|HH)*'
+  ],
+  z: [
+    '.*H.*V.*G.*'
+    ,'[RC]*'
+    ,'M*XEX.*'
+    ,'.*MCC.*DD.*'
+    ,'.*X.*RCHX.*'
+    ,'.*(.)(.)(.)(.)\\4\\3\\2\\1.*'
+    ,'(NI|ES|IH).*'
+    ,'[^C]*MMM[^C]*'
+    ,'.*(.)X\\1C\\1.*'
+    ,'[ROMEA]*HO[UMIEC]*'
+    ,'(XR|[^R])*'
+    ,'[^M]*M[^M]*'
+    ,'(S|MM|HHH)*'
+  ],
+};
+};
+
+var mid = (board_data.size - 1) / 2;
+var size = board_data.size;
+
   loadData();
 
   var lines = [];
@@ -287,3 +288,4 @@ function init() {
 }
 
 $(init);
+
