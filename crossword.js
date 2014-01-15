@@ -103,7 +103,7 @@ var mid = (board_data.size - 1) / 2;
 var size = board_data.size;
 
 function loadData() {
-  if (!user_data } {}
+  if (!user_data ) {
   user_data = undefined;
   try {
     user_data = JSON.parse(localStorage['xword_data_' + board_data.name]);
