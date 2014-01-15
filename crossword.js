@@ -287,5 +287,5 @@ var size = board_data.size;
   onInputChange();
 }
 
-$(init);
+init();
 
