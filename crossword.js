@@ -13,30 +13,6 @@ function transformToAssocArray( prmstr ) {
     return params;
 }
 
-function createCORSRequest(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-
-    // Check if the XMLHttpRequest object has a "withCredentials" property.
-    // "withCredentials" only exists on XMLHTTPRequest2 objects.
-    xhr.open(method, url, true);
-
-  } else if (typeof XDomainRequest != "undefined") {
-
-    // Otherwise, check if XDomainRequest.
-    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-
-  } else {
-
-    // Otherwise, CORS is not supported by the browser.
-    xhr = null;
-
-  }
-  return xhr;
-}
-
 var params = getSearchParameters();
 var url = params["url"];
 var solution = params["solution"];
@@ -44,11 +20,12 @@ var solution = params["solution"];
 
 var user_data;
 var board_data;
-if (url) {
+if (url != undefined) {
 board_data = $.getJSON(url);}
-if (solution) {
+if (solution != undefined) {
 user_data = $.getJSON(solution);
 }
+
 if (!board_data || !board_data.rows) {
 board_data = {
   size: 13,
