@@ -177,12 +177,12 @@ function onFocusCell() {
 function reset() {
   user_data.rows = [];
   saveData();
-  location.reload();
+  init();
 }
 
 function init() {
-  if (!board_data || !board_data.rows) {
-console.log(board_data);
+  if (!board_data) {
+  console.log(board_data);
 board_data = {
   size: 13,
   name: 'original',
