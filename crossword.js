@@ -233,8 +233,8 @@ board_data = {
   ],
 };
 };
-var mid = (board_data.size - 1) / 2;
-var size = board_data.size;
+mid = (board_data.size - 1) / 2;
+size = board_data.size;
 
   loadData();
 
