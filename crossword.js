@@ -17,6 +17,8 @@ var params = getSearchParameters();
 var url = params["url"];
 var solution = params["solution"];
 
+var mid ;
+var size;
 var user_data;
 var board_data;
 if (url != undefined) {
@@ -231,7 +233,6 @@ board_data = {
   ],
 };
 };
-
 var mid = (board_data.size - 1) / 2;
 var size = board_data.size;
 
