@@ -16,17 +16,30 @@ function transformToAssocArray( prmstr ) {
 var params = getSearchParameters();
 var url = params["url"];
 var solution = params["solution"];
-//var url = "https://raw.github.com/joosep/regex-crossword/master/mit_board_data.json"
+//var url = "https://raw.gith_board_dataub.com/joosep/regex-crossword/master/mit_board_data.json"
 
 var user_data;
 var board_data;
 if (url != undefined) {
-var var_board_data = $.getJSON(url).responseText;
-board_data = var_board_data
+$.ajax({
+    url: url,
+    dataType: "json",
+    success: function(response) {
+       var var_board_data =response.responseText;
+       board_data = var_board_data
+    }
+});
 }
 if (solution != undefined) {
-var var_user_data = $.getJSON(solution).responseText;
-user_data=var_user_data;
+
+$.ajax({
+    url: solution,
+    dataType: "json",
+    success: function(response) {
+       var var_user_data =response.responseText;
+       user_data = var_user_data
+    }
+});
 }
 
 if (!board_data || !board_data.rows) {
