@@ -22,7 +22,7 @@ var user_data;
 var board_data;
 if (url != undefined) {
 var var_board_data = $.getJSON(url);
-board_data = var_board_data
+board_data = var_board_data.responseText;
 }
 if (solution != undefined) {
 var var_user_data = $.getJSON(solution);
