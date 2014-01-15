@@ -25,7 +25,7 @@ board_data = JSON.parse($.getJSON(url).responseText);
 console.log(board_data);
 }
 if (solution != undefined) {
-user_data=JSON.parse(($.getJSON(solution).responseText);
+user_data=JSON.parse($.getJSON(solution).responseText);
  console.log(user_data);
 }
 
