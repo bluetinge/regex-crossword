@@ -26,8 +26,7 @@ if (url != undefined) {
         dataType: 'json',
         async: false,
         success: function(data) {
-            console.log(data);
-            board_data = JSON.parse(data.responseText);
+            board_data = data;
         }
     });
 }
@@ -38,7 +37,7 @@ if (solution != undefined) {
         async: false,
         success: function(data) {
             console.log(data);
-            user_data = JSON.parse(data.responseText);
+            user_data = data;
         }
     });
 }
