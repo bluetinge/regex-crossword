@@ -21,16 +21,26 @@ var solution = params["solution"];
 var user_data;
 var board_data;
 if (url != undefined) {
-json = $.getJSON(url);
-json=json.responseText;
-board_data = JSON.parse(json);
-console.log(board_data);
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+            console.log(data);
+            board_data = JSON.parse(data.responseText);
+        }
+    });
 }
 if (solution != undefined) {
-json = $.getJSON(solution)
-json=json.responseText;
-user_data=JSON.parse(json);
- console.log(user_data);
+ $.ajax({
+        url: solution,
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+            console.log(data);
+            user_data = JSON.parse(data.responseText);
+        }
+    });
 }
 
 if (!board_data || !board_data.rows) {
