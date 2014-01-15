@@ -21,16 +21,16 @@ var solution = params["solution"];
 var user_data;
 var board_data;
 if (url != undefined) {
-var var_board_data = $.getJSON(url);
-board_data = JSON.parse(var_board_data.responseText);
+board_data = JSON.parse($.getJSON(url).responseText);
+console.log(board_data);
 }
 if (solution != undefined) {
-var var_user_data = $.getJSON(solution);
-user_data=JSON.parse(var_user_data.responseText);
+user_data=JSON.parse(($.getJSON(solution).responseText);
+ console.log(user_data);
 }
 
 if (!board_data || !board_data.rows) {
-
+console.log(board_data);
 board_data = {
   size: 13,
   name: 'original',
