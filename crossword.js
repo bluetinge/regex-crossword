@@ -21,12 +21,16 @@ var solution = params["solution"];
 var user_data;
 var board_data;
 if (url != undefined) {
-board_data = $.getJSON(url);}
+var var_board_data = $.getJSON(url);
+board_data = var_board_data
+}
 if (solution != undefined) {
-user_data = $.getJSON(solution);
+var var_user_data = $.getJSON(solution);
+user_data=var_user_data;
 }
 
 if (!board_data || !board_data.rows) {
+
 board_data = {
   size: 13,
   name: 'original',
