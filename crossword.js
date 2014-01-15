@@ -22,11 +22,11 @@ var user_data;
 var board_data;
 if (url != undefined) {
 var var_board_data = $.getJSON(url);
-board_data = var_board_data.responseText;
+board_data = JSON.parse(var_board_data.responseText);
 }
 if (solution != undefined) {
 var var_user_data = $.getJSON(solution);
-user_data=var_user_data;
+user_data=JSON.parse(var_user_data.responseText);
 }
 
 if (!board_data || !board_data.rows) {
