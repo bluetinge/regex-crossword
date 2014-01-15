@@ -44,9 +44,11 @@ var solution = params["solution"];
 
 var user_data;
 var board_data;
-
-board_data = $.getJSON(url);
+if (url) {
+board_data = $.getJSON(url);}
+if (solution) {
 user_data = $.getJSON(solution);
+}
 if (!board_data || !board_data.rows) {
 board_data = {
   size: 13,
