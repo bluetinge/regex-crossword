@@ -21,11 +21,11 @@ var solution = params["solution"];
 var user_data;
 var board_data;
 if (url != undefined) {
-var var_board_data = $.getJSON(url);
+var var_board_data = $.getJSON(url)["responseText"];
 board_data = var_board_data
 }
 if (solution != undefined) {
-var var_user_data = $.getJSON(solution);
+var var_user_data = $.getJSON(solution)["responseText"];;
 user_data=var_user_data;
 }
 
