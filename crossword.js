@@ -1,50 +1,111 @@
+function getSearchParameters() {
+      var prmstr = window.location.search.substr(1);
+      return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+}
+
+function transformToAssocArray( prmstr ) {
+    var params = {};
+    var prmarr = prmstr.split("&");
+    for ( var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+    return params;
+}
+
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+
+  } else if (typeof XDomainRequest != "undefined") {
+
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+
+  } else {
+
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+
+  }
+  return xhr;
+}
+
+var params = getSearchParameters();
+var url = params["url"];
+//var url = "https://raw.github.com/joosep/regex-crossword/master/mit_board_data.json"
+var xhr = createCORSRequest('GET', url);
+if (!xhr) {
+  throw new Error('CORS not supported');
+}
+
+//var user_param = JSON.parse("https://github.com/joosep/regex-crossword/blob/master/mit_board_data.json");
+//alert(user_param);
+xhr.onload = function() {
+ var responseText = xhr.responseText;
+ console.log(responseText);
+ // process the response.
+};
+
+xhr.onerror = function() {
+  console.log('There was an error!');
+};
+xhr.send();
+$.getJSON("");
+var params = getSearchParameters();
 var board_data = {
   size: 13,
   name: 'original',
   x: [
-'TGQCRZI'
-,'UEUFGLWE'
-,'EKXCNAQPB'
-,'XORTOBDVNH'
-,'DWEZAILHMJF'
-,'KTPCELMYVFDC'
-,'GRXVXQGFNSITL'
-,'GKNMDPOWISLY'
-,'HHFHQYRWRTL'
-,'ISYGXFIRUL'
-,'DQGMIJTMD'
-,'SULQPNHY'
-,'XIJKBQM'
+    '[^X]*(DN|TE|NI)'
+    ,'[RONMHC]*I[RONMHC]*'
+    ,'.*(..)\\1P+'
+    ,'(E|RC|NM)*'
+    ,'([^MC]|MM|CC)*'
+    ,'R?(CR)*MC[MA]*'
+    ,'.*'
+    ,'.*CDD.*RRP.*'
+    ,'(XHH|[^XH])*'
+    ,'([^CME]|ME)*'
+    ,'.*RXO.*'
+    ,'.*LR.*RL.*'
+    ,'.*EU.*ES.*'
   ],
   y: [
-'IEBHFCL'
-,'ZWPNJDTY'
-,'RLQVMFILL'
-,'CGADHVSSTL'
-,'QFNBLYNIRUD'
-,'GUCOIMFWWRMY'
-,'TEXTALGORITHM'
-,'UKRZEQPYFJNQ'
-,'EOECXDQXIPB'
-,'XWPVMHGMQK'
-,'DTXNFYGLJ'
-,'KRKHSQUI'
-,'GGHIDSX'
+    '.*H.*H.*'
+    ,'(DI|NS|TH|OM)*'
+    ,'F.*[AO].*[AO].*'
+    ,'(O|RHH|MM)*'
+    ,'.*'
+    ,'C*MC(CCC|MM)*'
+    ,'[^C]*[^R]*III.*'
+    ,'(...?)\\1*'
+    ,'([^X]|XCC)*'
+    ,'(RR|HHH)*.?'
+    ,'N.*X.X.X.*E'
+    ,'R*D*M*'
+    ,'.(C|HH)*'
   ],
   z: [
-'TUEXDKG'
-,'GEKOWTRG'
-,'QUXREPXKH'
-,'CFCTZCVNHI'
-,'RGNOAEXMFSD'
-,'ZLABILQDHYQS'
-,'IWQDLMGPQGGUX'
-,'EPVHYFOYXMLI'
-,'BNMVNWRFIQJ'
-,'HJFSIWIJPK'
-,'FDISRRTNB'
-,'CTLTUMHQ'
-,'LYLLDYM'
+    '.*H.*V.*G.*'
+    ,'[RC]*'
+    ,'M*XEX.*'
+    ,'.*MCC.*DD.*'
+    ,'.*X.*RCHX.*'
+    ,'.*(.)(.)(.)(.)\\4\\3\\2\\1.*'
+    ,'(NI|ES|IH).*'
+    ,'[^C]*MMM[^C]*'
+    ,'.*(.)X\\1C\\1.*'
+    ,'[ROMEA]*HO[UMIEC]*'
+    ,'(XR|[^R])*'
+    ,'[^M]*M[^M]*'
+    ,'(S|MM|HHH)*'
   ],
 };
 
