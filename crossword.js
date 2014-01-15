@@ -39,27 +39,16 @@ function createCORSRequest(method, url) {
 
 var params = getSearchParameters();
 var url = params["url"];
+var solution = params["solution"];
 //var url = "https://raw.github.com/joosep/regex-crossword/master/mit_board_data.json"
-var xhr = createCORSRequest('GET', url);
-if (!xhr) {
-  throw new Error('CORS not supported');
-}
 
-//var user_param = JSON.parse("https://github.com/joosep/regex-crossword/blob/master/mit_board_data.json");
-//alert(user_param);
-xhr.onload = function() {
- var responseText = xhr.responseText;
- console.log(responseText);
- // process the response.
-};
+var user_data;
+var board_data;
 
-xhr.onerror = function() {
-  console.log('There was an error!');
-};
-xhr.send();
-$.getJSON("");
-var params = getSearchParameters();
-var board_data = {
+board_data = $.getJSON(url);
+user_data = $.getJSON(solution);
+if (!board_data || !board_data.rows) {
+board_data = {
   size: 13,
   name: 'original',
   x: [
@@ -108,13 +97,13 @@ var board_data = {
     ,'(S|MM|HHH)*'
   ],
 };
+};
 
 var mid = (board_data.size - 1) / 2;
 var size = board_data.size;
 
-var user_data;
-
 function loadData() {
+  if (!user_data } {}
   user_data = undefined;
   try {
     user_data = JSON.parse(localStorage['xword_data_' + board_data.name]);
@@ -123,6 +112,7 @@ function loadData() {
   if (!user_data || !user_data.rows) {
     user_data = { rows: [] };
   }
+}
 }
 
 function saveData() {
