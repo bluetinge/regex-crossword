@@ -39,7 +39,7 @@ if (solution != undefined) {
         async: false,
         success: function(data) {
             user_data = data;
-            init();
+            onInputChange();
         }
     });
 }
