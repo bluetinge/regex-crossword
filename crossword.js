@@ -51,8 +51,7 @@ function updateData(url,solution,puzzleName){
           }
       });
   } else {
-   user_data.rows = [];
-   init();
+    loadData();
   }
 }
 
