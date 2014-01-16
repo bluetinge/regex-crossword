@@ -47,9 +47,12 @@ function updateData(url,solution,puzzleName){
           success: function(data) {
               user_data = data;
               saveData();
-              checkRules();
+              init();
           }
       });
+  } else {
+   user_data.rows = [];
+   init();
   }
 }
 
