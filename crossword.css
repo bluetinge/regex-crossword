@@ -5,8 +5,8 @@ body
 }
 
 #board {
-  padding-left: 200px;
-  padding-top: 150px;
+  padding-left: 250px;
+  padding-top: 200px;
 }
 .cell_input {
   width: 14px;

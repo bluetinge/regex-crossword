@@ -12,20 +12,23 @@ if (url != undefined) {
         async: false,
         success: function(data) {
             board_data = data;
-            console.log(puzzleName);
+            if (puzzleName) {
             board_data.name = puzzleName;
+          }
             init();
         }
     });
 }
+console.log(solution);
 if (solution != undefined) {
  $.ajax({
         url: solution,
         dataType: 'json',
         async: false,
         success: function(data) {
+        console.log(solution);
             user_data = data;
-            onInputChange();
+            saveData();
         }
     });
 }
