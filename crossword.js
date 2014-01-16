@@ -5,12 +5,14 @@ function getSearchParameters() {
 
 function updateData(url,solution,puzzleName){
 if (url != undefined) {
+  console.log(puzzleName);
     $.ajax({
         url: url,
         dataType: 'json',
         async: false,
         success: function(data) {
             board_data = data;
+            console.log(puzzleName);
             board_data.name = puzzleName;
             init();
         }
