@@ -18,17 +18,15 @@ if (url != undefined) {
             init();
         }
     });
-}
-console.log(solution);
 if (solution != undefined) {
  $.ajax({
         url: solution,
         dataType: 'json',
         async: false,
         success: function(data) {
-        console.log(solution);
             user_data = data;
             saveData();
+            loadData();
         }
     });
 }

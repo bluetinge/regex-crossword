@@ -9,6 +9,7 @@
   </head>
   <body>
     <h2 id="puzzleName">test</h2>
+    
     The individual clues will turn <span class="match">green</span> when satisfied, <span class="nomatch">red</span> when not.<br/>
     <input type="button" value="Reset" id="reset"></input>
     <table id="board_table">
@@ -23,16 +24,17 @@
     <br/>
 
     <br>Puzzle examples:<br>
-    <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/mit_board_data.json',undefined,'MIT puzzle'); return false;">MIT puzzle (from Text Algorithm exam)</a> 
-     <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/mit_board_data.json','http://joosep.github.io/regex-crossword/mit_user_data.json','MIT puzzle'); return false;">Solution</a>  <br>
+      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/mit_board_data.json',undefined,'MIT puzzle'); return false;">MIT puzzle (from Text Algorithm exam)</a> 
+       <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/mit_board_data.json','http://joosep.github.io/regex-crossword/mit_user_data.json','MIT puzzle'); return false;">Solution</a>  <br>
 
-    <br><a href="http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/puzzles/very_simple.json">Very easy</a>
+      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/very_simple.json',undefined,'Very easy'); return false;">Very easy</a>      
 
-     <a href="http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/puzzles/very_simple.json&solution=http://joosep.github.io/regex-crossword/puzzles/very_simple_lah.json">Solution</a>
+      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/very_simple.json','http://joosep.github.io/regex-crossword/puzzles/very_simple_lah.json','Very easy'); return false;">Solution</a>  <br>
 
-      <br><a href="http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/puzzles/1389815468762355.json">Very easy 2
-      <br><a href="http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/puzzles/1389815366713518.json">Very easy 3</a>
 
-      <br>
+      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389815468762355.json',undefined,'Very easy'); return false;">Very easy 2</a>  <br>  
+
+
+      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389815366713518.json',undefined,'Very easy'); return false;">Very easy 3</a>  <br>
     </body>
 </html>
