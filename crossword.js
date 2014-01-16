@@ -3,24 +3,7 @@ function getSearchParameters() {
       return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
 }
 
-function transformToAssocArray( prmstr ) {
-    var params = {};
-    var prmarr = prmstr.split("&");
-    for ( var i = 0; i < prmarr.length; i++) {
-        var tmparr = prmarr[i].split("=");
-        params[tmparr[0]] = tmparr[1];
-    }
-    return params;
-}
-
-var params = getSearchParameters();
-var url = params["url"];
-var solution = params["solution"];
-
-var mid ;
-var size;
-var user_data;
-var board_data;
+function updateData(url,solution){
 if (url != undefined) {
     $.ajax({
         url: url,
@@ -43,7 +26,26 @@ if (solution != undefined) {
         }
     });
 }
+}
+function transformToAssocArray( prmstr ) {
+    var params = {};
+    var prmarr = prmstr.split("&");
+    for ( var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+    return params;
+}
 
+var params = getSearchParameters();
+var url = params["url"];
+var solution = params["solution"];
+
+var mid ;
+var size;
+var user_data;
+var board_data;
+updateData(url,solution);
 
 function loadData() {
   if (!user_data || !user_data.rows ) {
