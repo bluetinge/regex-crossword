@@ -1,36 +1,39 @@
+
 function getSearchParameters() {
       var prmstr = window.location.search.substr(1);
       return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
 }
 
 function updateData(url,solution,puzzleName){
-if (url != undefined) {
-  console.log(puzzleName);
-    $.ajax({
-        url: url,
-        dataType: 'json',
-        async: false,
-        success: function(data) {
-            board_data = data;
-            if (puzzleName) {
-            board_data.name = puzzleName;
+  if (url != undefined) {
+    console.log(puzzleName);
+      $.ajax({
+          url: url,
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+              board_data = data;
+              if (puzzleName) {
+              board_data.name = puzzleName;
+            }
+              init();
           }
-            init();
-        }
-    });
-if (solution != undefined) {
- $.ajax({
-        url: solution,
-        dataType: 'json',
-        async: false,
-        success: function(data) {
-            user_data = data;
-            saveData();
-            loadData();
-        }
-    });
+      });
 }
+  if (solution != undefined) {
+   $.ajax({
+          url: solution,
+          dataType: 'json',
+          async: false,
+          success: function(data) {
+              user_data = data;
+              saveData();
+              loadData();
+          }
+      });
+  }
 }
+
 function transformToAssocArray( prmstr ) {
     var params = {};
     var prmarr = prmstr.split("&");
