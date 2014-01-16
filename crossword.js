@@ -3,7 +3,7 @@ function getSearchParameters() {
       return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
 }
 
-function updateData(url,solution){
+function updateData(url,solution,puzzleName){
 if (url != undefined) {
     $.ajax({
         url: url,
@@ -11,6 +11,7 @@ if (url != undefined) {
         async: false,
         success: function(data) {
             board_data = data;
+            board_data.name = puzzleName;
             init();
         }
     });
@@ -184,10 +185,10 @@ function reset() {
 
 function init() {
   if (!board_data) {
-  console.log(board_data);
-board_data = {
+  board_data = {
+
   size: 13,
-  name: 'original',
+  name: 'MIT puzzle',
   x: [
     '[^X]*(DN|TE|NI)'
     ,'[RONMHC]*I[RONMHC]*'
@@ -239,7 +240,7 @@ mid = (board_data.size - 1) / 2;
 size = board_data.size;
 
   loadData();
-
+  document.getElementById('puzzleName').textContent=board_data.name;
   var lines = [];
   var ii, jj;
   var row = [];

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="crossword.css">
   </head>
   <body>
+    <h2 id="puzzleName">test</h2>
     The individual clues will turn <span class="match">green</span> when satisfied, <span class="nomatch">red</span> when not.<br/>
     <input type="button" value="Reset" id="reset"></input>
     <table id="board_table">
@@ -22,9 +23,8 @@
     <br/>
 
     <br>Puzzle examples:<br>
-    
-    <a onclick="runMyFunction('http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/mit_board_data.json'); return false;">MIT puzzle (from Text Algorithm exam)</a>  
-    <a mit_href="http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/mit_board_data.json&solution=http://joosep.github.io/regex-crossword/mit_user_data.json">Solution</a>.
+    <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/mit_board_data.json',undefined,'MIT puzzle'); return false;">MIT puzzle (from Text Algorithm exam)</a> 
+     <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/mit_board_data.json','http://joosep.github.io/regex-crossword/mit_user_data.json','MIT puzzle'); return false;">Solution</a>  <br>
 
     <br><a href="http://joosep.github.io/regex-crossword/?url=http://joosep.github.io/regex-crossword/puzzles/very_simple.json">Very easy</a>
 
