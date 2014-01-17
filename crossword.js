@@ -24,7 +24,7 @@ function transformToAssocArray( prmstr ) {
 }
 
 function updateData(url,solution,puzzleName){
-  if (url != undefined) {
+  if (url) {
       $.ajax({
           url: url,
           dataType: 'json',
@@ -34,7 +34,7 @@ function updateData(url,solution,puzzleName){
               if (puzzleName) {
                 board_data.name = puzzleName;
               }
-               if (solution != undefined) {
+               if (!solution) {
                  $.ajax({
                         url: solution,
                         dataType: 'json',
@@ -46,11 +46,12 @@ function updateData(url,solution,puzzleName){
                         }
                     });
                 } else {
+                  forceDataUpdate();
                   init();
                 }
           }
       });
-} else if (solution != undefined) {
+} else if (solution) {
      $.ajax({
             url: solution,
             dataType: 'json',
@@ -60,10 +61,20 @@ function updateData(url,solution,puzzleName){
                 saveData();
                 init();
             }
-        });
-    } else {
-       init();
-    }
+    });
+ } else {
+   init();
+  }
+}
+function forceDataUpdate() {
+ user_data = undefined;
+  try {
+    user_data = JSON.parse(localStorage['xword_data_' + board_data.name]);
+  } catch (e) {
+  }
+  if (!user_data || !user_data.rows) {
+    user_data = { rows: [] };
+  }
 }
 
 function loadData() {
@@ -310,5 +321,5 @@ size = board_data.size;
 }
 
 $(document).ready(function(){
-  $(updateData(url,solution));
+  $(updateData(url,solution,undefined));
 });
