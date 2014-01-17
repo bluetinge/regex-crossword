@@ -7,7 +7,6 @@ var mid ;
 var size;
 var user_data;
 var board_data;
-updateData(url,solution);
 
 function getSearchParameters() {
       var prmstr = window.location.search.substr(1);
@@ -33,26 +32,38 @@ function updateData(url,solution,puzzleName){
           success: function(data) {
               board_data = data;
               if (puzzleName) {
-              board_data.name = puzzleName;
+                board_data.name = puzzleName;
+              }
+               if (solution != undefined) {
+                 $.ajax({
+                        url: solution,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            user_data = data;
+                            saveData();
+                            init();
+                        }
+                    });
+                } else {
+                  init();
+                }
+          }
+      });
+} else if (solution != undefined) {
+     $.ajax({
+            url: solution,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                user_data = data;
+                saveData();
+                init();
             }
-              init();
-          }
-      });
-}
-  if (solution != undefined) {
-   $.ajax({
-          url: solution,
-          dataType: 'json',
-          async: false,
-          success: function(data) {
-              user_data = data;
-              saveData();
-              init();
-          }
-      });
-  } else {
-    loadData();
-  }
+        });
+    } else {
+       init();
+    }
 }
 
 function loadData() {
@@ -247,7 +258,7 @@ mid = (board_data.size - 1) / 2;
 size = board_data.size;
 
   loadData();
-  document.getElementById('puzzleName').textContent=board_data.name;
+  document.getElementById('puzzleTitle').textContent=board_data.name;
   var lines = [];
   var ii, jj;
   var row = [];
@@ -298,4 +309,6 @@ size = board_data.size;
   onInputChange();
 }
 
-$(init);
+$(document).ready(function(){
+  $(updateData(url,solution));
+});
