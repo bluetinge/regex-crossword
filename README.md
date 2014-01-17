@@ -1,18 +1,9 @@
 regex-crossword
 ===============
 
-Implementation of a RegExp crossword.
 
-View the current version at http://jimbly.github.com/regex-crossword/
+Regex viewer for showing generated regular expressions. Generator code: https://github.com/binoternary/regex-crossword-generator
 
-Original puzzle from http://www.i-programmer.info/news/144-graphics-and-games/5450-can-you-do-the-regular-expression-crossword.html
+base for viewer was taken from http://jimbly.github.com/regex-crossword/ and modified to show different regular expressions and also possible solutions.
 
-TODO List
-=========
-* Auto-check against known solution
-* Allow choosing between multiple crosswords puzzles
-* Allow users to save their own puzzles and load other people's
-* Track time spent solving puzzle
-* Rotate buttons
-* Undo/redo
-
+Original Implementation of a RegExp crossword done by jimbly (http://jimbly.github.com/regex-crossword/)
