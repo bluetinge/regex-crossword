@@ -34,7 +34,7 @@ function updateData(url,solution,puzzleName){
               if (puzzleName) {
                 board_data.name = puzzleName;
               }
-               if (!solution) {
+               if (solution) {
                  $.ajax({
                         url: solution,
                         dataType: 'json',
