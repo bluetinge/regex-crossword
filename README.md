@@ -15,4 +15,3 @@ TODO List
 * Track time spent solving puzzle
 * Rotate buttons
 * Undo/redo
-
