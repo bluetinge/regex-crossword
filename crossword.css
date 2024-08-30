@@ -5,26 +5,39 @@ body
 }
 
 #board {
-  padding-left: 250px;
-  padding-top: 200px;
+  padding-left: 200px;
+  padding-top: 150px;
+}
+.cell_input,
+.rule {
+  font-family: monospace;
 }
 .cell_input {
-  width: 14px;
+  width: 24px;
+  font-size: 24px;
   text-align: center;
-  padding: 4px 2px 4px 2px;
+  padding: 0 2px;
   margin: 1px;
   border: 1px none #AAA;
+  background: rgba(0, 0, 0, 0);
+  outline: none;
   -opacity: 0.9;
 }
+.highlighted-cell {
+  border: 1px dashed;
+  border-color: rgba(0,0,0, 0.5);
+  border-radius: 100%;
+}
 .cell {
+  overflow: hidden;
   display: inline-block;
-  width: 39px;
-  height: 45px;
+  width: 40px;
+  height: 50px;
   background: url('hex.png');
   margin-right: -1px;
   margin-left: -1px;
   margin-bottom: -18px;
-  margin-top: -8px;
+  margin-top: -10px;
   padding-top: 8px;
   background-repeat: no-repeat;
 }
@@ -48,7 +61,7 @@ body
 }
 
 .top, .bottom {
-  width: 37px;
+  width: 38px;
 }
 .leftside {
   right: 5px;
@@ -56,12 +69,13 @@ body
 }
 .side {
   left: 2px;
-  top: 4px;
+  top: 0px;
 }
 .rule.side {
   width: 37px;
 }
 .top {
+  bottom: 6px;
 }
 .bottom {
   top: 6px;
@@ -71,19 +85,31 @@ body
   position: relative;
   display: inline-block;
   height: 24px;
-  border-color: red;
+  border-color: #E66100;
 }
 .rule {
   position: absolute;
+  font-size: 16px;
   display: inline-block;
   white-space: nowrap;
 }
 
+.colorblind .match {
+  color: #5D3A9B;
+  font-weight: bold;
+}
+.colorblind .nomatch {
+  color: #E66100;
+}
 .match {
-  color: #0C0;
+  color: #484;
+  font-weight: bold;
 }
 .nomatch {
-  color: #C00;
+  color: #F44;
+}
+.highlighted {
+  text-decoration: underline;
 }
 
 span {

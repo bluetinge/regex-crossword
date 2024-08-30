@@ -1,101 +1,46 @@
-
-var params = getSearchParameters();
-var url = params["url"];
-var solution = params["solution"];
-
-var mid ;
+var board_data;
+var mid;
 var size;
 var user_data;
-var board_data;
+var use_editor;
 
-function getSearchParameters() {
-      var prmstr = window.location.search.substr(1);
-      return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+function loadPuzzle(data) {
+    return JSON.parse(atob(data));
 }
 
-function transformToAssocArray( prmstr ) {
-    var params = {};
-    var prmarr = prmstr.split("&");
-    for ( var i = 0; i < prmarr.length; i++) {
-        var tmparr = prmarr[i].split("=");
-        params[tmparr[0]] = tmparr[1];
-    }
-    return params;
+function savePuzzle(data) {
+    // return a url to this puzzle
+    var base_url = window.location.href.split('?')[0];
+    var puzzle_data = btoa(JSON.stringify(data));
+    return base_url + "?puzzle=" + puzzle_data;
 }
 
-function updateData(url,solution,puzzleName){
-  if (url) {
-      $.ajax({
-          url: url,
-          dataType: 'json',
-          async: false,
-          success: function(data) {
-              board_data = data;
-              if (puzzleName) {
-                board_data.name = puzzleName;
-              }
-               if (solution) {
-                 $.ajax({
-                        url: solution,
-                        dataType: 'json',
-                        async: false,
-                        success: function(data) {
-                            user_data = data;
-                            saveData();
-                            init();
-                        }
-                    });
-                } else {
-                  forceDataUpdate();
-                  init();
-                }
-          }
-      });
-} else if (solution) {
-     $.ajax({
-            url: solution,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                user_data = data;
-                saveData();
-                init();
-            }
-    });
- } else {
-   init();
-  }
-}
-function forceDataUpdate() {
- user_data = undefined;
+function localLoad(key, deflt) {
+  var ret = deflt;
   try {
-    user_data = JSON.parse(localStorage['xword_data_' + board_data.name]);
+    ret = JSON.parse(localStorage[key]);
   } catch (e) {
+    // ignored, use default
   }
-  if (!user_data || !user_data.rows) {
-    user_data = { rows: [] };
+  return ret;
+}
+function localSave(key, value) {
+  try {
+    localStorage[key] = JSON.stringify(value);
+  } catch (e) {
+    // No localstorage
   }
 }
 
 function loadData() {
-  if (!user_data || !user_data.rows ) {
-  user_data = undefined;
-  try {
-    user_data = JSON.parse(localStorage['xword_data_' + board_data.name]);
-  } catch (e) {
-  }
+  user_data = localLoad('xword_data_' + board_data.name);
   if (!user_data || !user_data.rows) {
     user_data = { rows: [] };
   }
 }
-}
 
 function saveData() {
-  try {
-    localStorage['xword_data_' + board_data.name] = JSON.stringify(user_data);
-  } catch (e) {
-    // No localstorage
-  }
+  localSave('xword_data_' + board_data.name, user_data);
 }
 
 function rowSize(ii) {
@@ -191,85 +136,217 @@ function checkRules() {
   $('#debug').html(debug.join('<br/>'));
 }
 
-function onInputChange() {
-  getData();
-  checkRules();
+function checkArrowKeys(elem, event) {
+  if (event) {
+    var di = 0, dj = 0;
+    if (event.which == 37) { // left arrow
+      dj = -1;
+    } else if (event.which == 38) { // up arrow
+      di = -1;
+    } else if (event.which == 39) { // right arrow
+      dj = 1;
+    } else if (event.which == 40) { // down arrow
+      di = 1;
+    }
+    if (di != 0 || dj != 0) {
+      var matches = $(elem).attr('id').match(/\d+/g);
+      var i = parseInt(matches[0]) + di;
+      var j = parseInt(matches[1]) + dj;
+      if (i < size) {
+        // move along same diagonal in top and bottom half
+        if (di == 1 && i > size/2) {
+          j--;
+        } else if (di == -1 && i > size/2 - 1) {
+          j++;
+        }
+      }
+      $('#cell_' + i + '_' + j).focus().select();
+      return true;
+    }
+  }
+  return false;
+}
+
+function onInputChange(event) {
+  if (!checkArrowKeys(this, event)) {
+    getData();
+    checkRules();
+  }
 }
 
 function onFocus() {
   $(this).select();
 }
 
-function onFocusCell() {
+function onClickCell() {
   var elem = $('#' + this.id.slice('wrap_'.length));
   elem.focus();
   elem.select();
+
+}
+
+function onFocusCell() {
+  // Deselect all previous highlighted rules
+  $('.highlighted').removeClass('highlighted');
+
+  // Get position of current cell
+  var pos_match = this.id.match(/cell_(\d+)_(\d+)/);
+  var a = parseInt(pos_match[1], 10);
+  var b = parseInt(pos_match[2], 10);
+  var y = a;
+  var x = y > mid ? b + a - mid : b;
+  var z = y < mid ? b - a + mid : b;
+
+  // Set the relevant rules as highlighted
+  $('#rule_x_' + x).addClass('highlighted');
+  $('#rule_y_' + y).addClass('highlighted');
+  $('#rule_z_' + z).addClass('highlighted');
+
+  $('.highlighted-cell').removeClass('highlighted-cell');
+
+  function highlightCell(a, b) {
+    $('#cell_' + a + '_' + b).addClass('highlighted-cell');
+  }
+
+  for (var bb = 0; bb < rowSize(a); ++bb) {
+    highlightCell(a, bb);
+  }
+
+  var bb = x;
+  for (var aa = 0; aa < size; ++aa) {
+    if (aa > mid) {
+      --bb;
+    }
+    highlightCell(aa, bb);
+  }
+
+  var bb = z;
+  for (var aa = size - 1; aa >= 0; --aa) {
+    if (aa < mid) {
+      --bb;
+    }
+    highlightCell(aa, bb);
+  }
 }
 
 function reset() {
   user_data.rows = [];
   saveData();
-  init();
+  $('.cell_input').val('');
+  getData();
+  checkRules();
+}
+
+function editRule(axis, idx) {
+  var rule_span = document.getElementById('rule_' + axis + '_' + idx);
+  rule_span.innerHTML = ruleInput(axis,idx);
+}
+
+function updateRule(axis, idx, value) {
+  if (value == '') {
+    value = '.*';
+  }
+  board_data[axis][idx] = value;
+  var rule_span = document.getElementById('rule_' + axis + '_' + idx);
+  rule_span.innerHTML = ruleDisplay(axis, idx);
+  checkRules();
+}
+
+function ruleInput(axis, idx) {
+  var form = '<form action="#" onsubmit="updateRule(\'' + axis + '\', ' + idx + ', rule.value);">'
+  return form + '<input name="rule" value="' + board_data[axis][idx] + '"/></form>';
+}
+
+function ruleDisplay(axis, idx) {
+  var open = '';
+  var close = '';
+  if (use_editor) {
+    open = '<span ondblclick="editRule(\'' + axis + '\', ' + idx + ');">';
+    close = '</span>';
+  }
+  return open + board_data[axis][idx] + close;
+}
+
+function getSearchParams(){
+  var p={};
+  location.search.replace(
+    /[?&]+([^=&]+)=([^&]*)/gi,
+    function(s,k,v) { p[k]=v; }
+  )
+  return p;
+}
+
+function blankRules(n) {
+  blanks = []
+  for(var i = 0; i < n; i++) {
+    blanks.push('.*');
+  }
+  return blanks;
+}
+
+var is_colorblind = false;
+function toggleColorBlind() {
+  is_colorblind = !is_colorblind;
+  localSave('colorblind', is_colorblind);
+  if (is_colorblind) {
+    $('body').addClass('colorblind');
+    $('.mode_normal').hide();
+    $('.mode_colorblind').show();
+  } else {
+    $('body').removeClass('colorblind');
+    $('.mode_normal').show();
+    $('.mode_colorblind').hide();
+  }
 }
 
 function init() {
-  if (!board_data) {
-  board_data = {
+  for (var name in all_boards) {
+    var option = $('<option>', {value: name, text: name});
+    $('#puzzle_picker').append(option);
+    all_boards[name]['name'] = name;
+  }
 
-  size: 13,
-  name: 'MIT puzzle',
-  x: [
-    '[^X]*(DN|TE|NI)'
-    ,'[RONMHC]*I[RONMHC]*'
-    ,'.*(..)\\1P+'
-    ,'(E|RC|NM)*'
-    ,'([^MC]|MM|CC)*'
-    ,'R?(CR)*MC[MA]*'
-    ,'.*'
-    ,'.*CDD.*RRP.*'
-    ,'(XHH|[^XH])*'
-    ,'([^CME]|ME)*'
-    ,'.*RXO.*'
-    ,'.*LR.*RL.*'
-    ,'.*EU.*ES.*'
-  ],
-  y: [
-    '.*H.*H.*'
-    ,'(DI|NS|TH|OM)*'
-    ,'F.*[AO].*[AO].*'
-    ,'(O|RHH|MM)*'
-    ,'.*'
-    ,'C*MC(CCC|MM)*'
-    ,'[^C]*[^R]*III.*'
-    ,'(...?)\\1*'
-    ,'([^X]|XCC)*'
-    ,'(RR|HHH)*.?'
-    ,'N.*X.X.X.*E'
-    ,'R*D*M*'
-    ,'.(C|HH)*'
-  ],
-  z: [
-    '.*H.*V.*G.*'
-    ,'[RC]*'
-    ,'M*XEX.*'
-    ,'.*MCC.*DD.*'
-    ,'.*X.*RCHX.*'
-    ,'.*(.)(.)(.)(.)\\4\\3\\2\\1.*'
-    ,'(NI|ES|IH).*'
-    ,'[^C]*MMM[^C]*'
-    ,'.*(.)X\\1C\\1.*'
-    ,'[ROMEA]*HO[UMIEC]*'
-    ,'(XR|[^R])*'
-    ,'[^M]*M[^M]*'
-    ,'(S|MM|HHH)*'
-  ],
-};
-};
-mid = (board_data.size - 1) / 2;
-size = board_data.size;
+  var url_params = getSearchParams();
+  use_editor = 'edit' in url_params;
+  if ('puzzle' in url_params) {
+    board_data = loadPuzzle(url_params['puzzle']);
+  } else if ('new_size' in url_params) {
+    var sz = url_params['new_size'];
+    board_data = {
+      size: sz,
+      author: url_params['new_author'],
+      name: url_params['new_name'],
+      x: blankRules(sz),
+      y: blankRules(sz),
+      z: blankRules(sz)
+    };
+  } else if ('puzzle_name' in url_params) {
+    board_data = all_boards[url_params['puzzle_name']];
+  } else {
+    board_data = all_boards['original'];
+  }
+  if (board_data['name'] != 'original') {
+    $('.original_solution').hide();
+    $('#puzzle_credit').html("puzzle <b>" + board_data['name'] + "</b> by " + board_data['author']);
+  }
+  
+  if (window.localStorage) {
+    $('#nolocalstorage').hide();
+  } else {
+    $('#localstorage').hide();
+  }
+  
+  if (localLoad('colorblind')) {
+    toggleColorBlind();
+  } else {
+    $('.mode_colorblind').hide();
+  }
+  $('.colorblind_toggle').click(toggleColorBlind);
 
   loadData();
-  document.getElementById('puzzleTitle').textContent=board_data.name;
+  mid = (board_data.size - 1) / 2;
+  size = board_data.size;
+
   var lines = [];
   var ii, jj;
   var row = [];
@@ -278,7 +355,8 @@ size = board_data.size;
     var data = board_data[axis][idx];
     //data = styleinner + '_' + idx;
     row.push('<span class="rule_parent ' + styleboth + '"><span class="rule '
-      + styleboth + ' ' + styleinner + '" id="rule_' + axis + '_' + idx + '">' + data + '</span></span>');
+      + styleboth + ' ' + styleinner + '" id="rule_' + axis + '_' + idx
+      + '">'+ruleDisplay(axis, idx)+'</span></span>');
   }
   for (ii = 0; ii <= mid; ++ii) {
     addRule('top', 'x', ii);
@@ -315,11 +393,22 @@ size = board_data.size;
   $('.cell_input').change(onInputChange);
   $('.cell_input').keyup(onInputChange);
   $('.cell_input').click(onFocus);
-  $('.cell').click(onFocusCell);
+  $('.cell').click(onClickCell);
+  $('.cell_input').focus(onFocusCell);
   $('#reset').click(reset);
+  if (use_editor) {
+    $('.no_edit').hide();
+    $('#make_link').click(function() {
+      $('#puzzle_link').attr('value', savePuzzle(board_data));
+    });
+  } else {
+    $('.edit').hide();
+    $('.new_parameters').hide();
+    $('#new_puzzle').click(function() {
+      $('.new_parameters').show();
+    });
+  }
   onInputChange();
 }
 
-$(document).ready(function(){
-  $(updateData(url,solution,undefined));
-});
+$(init);

@@ -3,14 +3,61 @@
   <head>
     <title>RegEx Crossword</title>
     <!-- meta http-equiv="refresh" content="1" -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script src="jquery.1.6.1.min.js"></script>
+    <script src="boards.js"></script>
     <script src="crossword.js"></script>
     <link rel="stylesheet" type="text/css" href="crossword.css">
   </head>
   <body>
-    <h2 id="puzzleTitle"></h2>
-    The individual clues will turn <span class="match">green</span> when satisfied, <span class="nomatch">red</span> when not.<br/>
-    <input type="button" value="Reset" id="reset"></input>
+    <script>/*workaround for ff bug 1404468*/</script>
+    It's a crossword puzzle where you need to fill in the hexes with character sequences, so that they match the regular expressions listed around the edges.<br/>
+    The individual clues will turn <span class="match"><span class="mode_colorblind">bold purple</span><span class="mode_normal">bold green</span></span> when satisfied, <span class="nomatch"><span class="mode_colorblind">orange</span><span class="mode_normal">red</span></span> when not, and <span class="highlighted">underlined</span> when active.<br />
+    Note that the regex must be a full match, and empty cells are treated as spaces.<br/>
+    <span class="edit">Double click a rule to edit it.  When finished, press 'enter'.<br/></span>
+    <table><tr>
+      <td><input type="button" value="Reset" id="reset"/></td>
+      <td>
+        <input type="button" value="Use Color Blind Mode" class="colorblind_toggle mode_normal"/>
+        <input type="button" value="Use Normal Mode" class="colorblind_toggle mode_colorblind"/>
+      </td>
+      <td id="editor" align='right'>
+        <span class="no_edit">
+          <form id='new_puzzle' method='GET'>
+            <input type="button" value="New Puzzle" id='new_puzzle' />
+            <span class="new_parameters">
+              &nbsp;&nbsp;Size:
+              <select name='new_size'>
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+                <option value="9">9</option>
+                <option value="11">11</option>
+                <option value="13" selected>13</option>
+                <option value="15">15</option>
+                <option value="17">17</option>
+                <option value="19">19</option>
+                <option value="21">21</option>
+                <option value="23">23</option>
+                <option value="25">25</option>
+                <option value="27">27</option>
+                <option value="29">29</option>
+              </select>
+              <input type='hidden' name='edit'/>
+              &nbsp;&nbsp;Name:
+              <input type='text' name='new_name'/>
+              &nbsp;&nbsp;Author:
+              <input type='text' name='new_author'/>
+              &nbsp;&nbsp;<input type='submit' value='go'/>
+            </span>
+          </form>
+        </span>
+        <span class="edit">
+          <input type="button" value="Link to this Puzzle" id="make_link" />
+          <input type="text" width=100 id="puzzle_link" />
+        </span>
+      </td>
+    </tr></table>
     <table id="board_table">
       <tr><td id="board" align="center">
       </td>
@@ -21,60 +68,28 @@
     <br/>
     <br/>
     <br/>
-
-    <br>Puzzle examples:<br>
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/mit_board_data.json',undefined,'MIT puzzle'); return false;">MIT puzzle (from Text Algorithm exam)</a> 
-       <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/mit_board_data.json','http://joosep.github.io/regex-crossword/puzzles/mit_user_data.json','MIT puzzle'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/very_simple.json',undefined,'Very easy'); return false;">Very easy, iteration 1</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/very_simple.json','http://joosep.github.io/regex-crossword/puzzles/very_simple_lah.json','Very easy'); return false;">Solution</a>  <br>   
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924192029662.json',undefined,'1389924192029662'); return false;">1389924192029662</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924192029662.json','http://joosep.github.io/regex-crossword/puzzles/1389924192029662_solution.json','1389924192029662'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924191714643.json',undefined,'1389924191714643'); return false;">1389924191714643</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924191714643.json','http://joosep.github.io/regex-crossword/puzzles/1389924191714643_solution.json','1389924191714643'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924191386625.json',undefined,'1389924191386625'); return false;">1389924191386625</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924191386625.json','http://joosep.github.io/regex-crossword/puzzles/1389924191386625_solution.json','1389924191386625'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924191034605.json',undefined,'1389924191034605'); return false;">1389924191034605</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924191034605.json','http://joosep.github.io/regex-crossword/puzzles/1389924191034605_solution.json','1389924191034605'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924190671584.json',undefined,'1389924190671584'); return false;">1389924190671584</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924190671584.json','http://joosep.github.io/regex-crossword/puzzles/1389924190671584_solution.json','1389924190671584'); return false;">Solution</a>  <br>
-
-            <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924190358566.json',undefined,'1389924190358566'); return false;">1389924190358566</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924190358566.json','http://joosep.github.io/regex-crossword/puzzles/1389924190358566_solution.json','1389924190358566'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924190075550.json',undefined,'1389924190075550'); return false;">1389924190075550</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924190075550.json','http://joosep.github.io/regex-crossword/puzzles/1389924190075550_solution.json','1389924190075550'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924189788533.json',undefined,'1389924189788533'); return false;">1389924189788533</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924189788533.json','http://joosep.github.io/regex-crossword/puzzles/1389924189788533_solution.json','1389924189788533'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924189506517.json',undefined,'1389924189506517'); return false;">1389924189506517</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924189506517.json','http://joosep.github.io/regex-crossword/puzzles/1389924189506517_solution.json','1389924189506517'); return false;">Solution</a>  <br>
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924189214500.json',undefined,'1389924189214500'); return false;">1389924189214500</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389924189214500.json','http://joosep.github.io/regex-crossword/puzzles/1389924189214500_solution.json','1389924189214500'); return false;">Solution</a>  <br>
-
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389923839891520.json',undefined,'1389923839891520'); return false;">1389923839891520</a>      
-
-      <a href="#" onclick="updateData('http://joosep.github.io/regex-crossword/puzzles/1389923839891520.json','http://joosep.github.io/regex-crossword/puzzles/1389923839891520_solution.json','1389923839891520'); return false;">Solution</a>  <br>
-
-
-    </body>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <form>
+      <span id='puzzle_credit'>
+        <a href="https://web.mit.edu/puzzle/www/2013/coinheist.com/rubik/a_regular_crossword/">
+          Original puzzle
+        </a>
+        written by Dan Gulotta for the 2013 MIT Mystery Hunt.
+      </span>
+      <br/>
+      Select a puzzle:
+      <select name='puzzle_name' id='puzzle_picker'></select>
+      <input type='submit' value='go' />
+    </form>
+    <br/>
+    Javascript implementation by <a href="https://github.com/Jimbly">Jimb Esser</a>.  Source code available on <a href="https://github.com/Jimbly/regex-crossword">GitHub</a>, fork and add your own puzzles!<br/>
+    <span id='original_solution'>
+    Solution available <a href="https://web.mit.edu/puzzle/www/2013/coinheist.com/rubik/a_regular_crossword/answer/">here</a>.
+    <br/></span>
+    <span id="nolocalstorage">Best viewed in <a href="http://chrome.google.com">Google Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.</span> <span id="localstorage">Your work should be saved if you refresh the page or come back later.</span><br/>
+    <div id="debug"></div>
+  </body>
 </html>
