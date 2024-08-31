@@ -261,10 +261,7 @@ function ruleDisplay(axis, idx) {
   var open = '';
   var close = '';
   if (use_editor) {
-    open = '<span 
-              ondblclick="editRule(\'' + axis + '\', ' + idx + ');"
-              onmousedown="editRule(\'' + axis + '\', ' + idx + ');"
-        >';
+    open = '<span onmousedown="editRule(\'' + axis + '\', ' + idx + ');">';
     close = '</span>';
   }
   return open + board_data[axis][idx] + close;
