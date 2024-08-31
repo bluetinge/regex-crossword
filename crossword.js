@@ -263,7 +263,7 @@ function ruleDisplay(axis, idx) {
   if (use_editor) {
     open = '<span 
               ondblclick="editRule(\'' + axis + '\', ' + idx + ');"
-              oncontextmenu="editRule(\'' + axis + '\', ' + idx + ');"
+              onmousedown="editRule(\'' + axis + '\', ' + idx + ');"
         >';
     close = '</span>';
   }
