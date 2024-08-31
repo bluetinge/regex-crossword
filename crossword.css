@@ -86,6 +86,7 @@ body
   display: inline-block;
   height: 24px;
   border-color: #E66100;
+  -border: 2px dotted black;
 }
 .rule {
   position: absolute;
