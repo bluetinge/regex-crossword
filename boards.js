@@ -156,8 +156,6 @@ all_boards = {
       '(..).*\\1.?'
     ]
   },
-  },
-},
   'animanga': {
     'size': 13,
     author: 'BlueTinge',
