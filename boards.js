@@ -168,7 +168,7 @@ all_boards = {
       ,'.*NANI(I(I?)?)?'
       ,'.*DESU.*DESU.*'
       ,'[DOKI]+[^DOKI]+[DOKI]+'
-      ,'U?(FU)+[^FU]'
+      ,'U?(FU)+[^FU]*'
       ,'.*UWU*OIRA.*'
       ,'.[^YUME]*'
       ,'(.)(.)(.)(.)(\\1|\\2|\\3|\\4)*'
