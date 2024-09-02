@@ -205,7 +205,7 @@ all_boards = {
       ,'.*KERO.*'
     ],
   },
-  'animanga-v1-(multiple_solutions)': {
+  'animanga-v1': {
     'size': 13,
     author: 'BlueTinge',
     x: [
