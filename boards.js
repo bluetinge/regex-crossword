@@ -171,6 +171,55 @@ all_boards = {
       ,'U?(FU)+[^FU]*'
       ,'.*UWU*OIRA.*'
       ,'.[^YUME]*'
+      ,'(.)(.)(.)(\\1|\\2|\\3)*'
+      ,'(.)(.).(\\1|\\2)*'
+    ],
+    y: [
+      '[KUI]*KUI[KUI*]'
+      ,'[HA-I]*[K-U]*'
+      ,'[KAWAII]*[DESU]*'
+      ,'.*[KAMEHAMEHA]{3}.*'
+      ,'[^A]*(WAA|GYAAA|KYAAAA).*'
+      ,'[ORE]+[BOKU]+[WATASHI]+[UCHI]+'
+      ,'(.)(.)(\\1|\\2)*(GIRI)+(\\1|\\2)*'
+      ,'(.)(.)(\\1|\\2)*ISEKAI(\\1|\\2)*'
+      ,'(.)(.)(.)(\\3\\2\\1).*(\\4).*'
+      ,'[OMAE]*[WA]*[MOU]*.[SHINDERU]*'
+      ,'[KUREMASU]*.'
+      ,'[MOE]{2}.*'
+      ,'[DAIJOUBU]*'
+    ],
+    z: [
+      '.*OUO.*OUO.*'
+      ,'(.)(.)(\\1|\\2)*.(\\1|\\2)'
+      ,'.[TSUNDERE]*'
+      ,'.*([^ONIISAN]).*\\1.*\\1.*'
+      ,'[^UWU]*UWU[^OWO]*'
+      ,'[A-I]*B.*FUJI.*'
+      ,'(.)?!..*\\1.*\\1.*\\1.*\\1.*'
+      ,'([^OTAKU]).*\\1.*\\1.*\\1.*'
+      ,'[NANI]*!+'
+      ,'.*[^HI_WAIFUS]{2}.{3,4}'
+      ,'.*UMAI.*'
+      ,'([^OWO]|3OWO)*'
+      ,'.*KERO.*'
+    ],
+  },
+  'animanga v1 (multiple solutions)': {
+    'size': 13,
+    author: 'BlueTinge',
+    x: [
+      '.*BAKA.*'
+      ,'.*SENPAI.*'
+      ,'.*CHIBI.*'
+      ,'.*SUGOI.*'
+      ,'.*ONII.CHAN.*'
+      ,'.*NANI(I(I?)?)?'
+      ,'.*DESU.*DESU.*'
+      ,'[DOKI]+[^DOKI]+[DOKI]+'
+      ,'U?(FU)+[^FU]*'
+      ,'.*UWU*OIRA.*'
+      ,'.[^YUME]*'
       ,'(.)(.)(.)(.)(\\1|\\2|\\3|\\4)*'
       ,'(.)(.).(\\1|\\2)*'
     ],
