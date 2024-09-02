@@ -196,7 +196,7 @@ all_boards = {
       ,'.*([^ONIISAN]).*\\1.*\\1.*'
       ,'[^UWU]*UWU[^OWO]*'
       ,'[A-I]*B.*FUJI.*'
-      ,'(.)?!..*\\1.*\\1.*\\1.*\\1.*'
+      ,'(.)(?!\\1).*\\1.*\\1.*\\1.*\\1.*'
       ,'([^OTAKU]).*\\1.*\\1.*\\1.*'
       ,'[NANI]*!+'
       ,'.*[^HI_WAIFUS]{2}.{3,4}'
@@ -205,7 +205,7 @@ all_boards = {
       ,'.*KERO.*'
     ],
   },
-  'animanga v1 (multiple solutions)': {
+  'animanga-v1-(multiple_solutions)': {
     'size': 13,
     author: 'BlueTinge',
     x: [
